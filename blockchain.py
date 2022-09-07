@@ -1,13 +1,17 @@
-import hashlib
+import datetime
+from block import Block
 
-class Block:
-    def __init__(self, previous_block_hash, transaction_list):
-        self.previous_block_hash = previous_block_hash
-        self.transaction_list = transaction_list
+block_chain = [Block.create_genesis_block()]
 
-        self.block_data = "-".join(transaction_list) + "-" + previous_block_hash
-        self.block_hash = hashlib.sha256(self.block_data.encode()).hexdigest()
+print("The genesis block has been created!")
+print(f"Hash {block_chain[-1].hash}")
 
-initial_block = Block("", [])
+num_blocks_to_add = 10
 
-second_block = Block(initial_block.block_hash, [])
+for i in range(1, num_blocks_to_add + 1):
+    block_chain.append(Block(block_chain[-1].hash, "Data", datetime.datetime.now()))
+    
+    print(f"Block {i} has been created.")
+    print(f"Block hash: {block_chain[i].hash}")
+
+
